@@ -51,82 +51,78 @@ namespace CSVAnalyzer
                 DisplayChart(selectedSubstance);
                 // Обработка и отображение данных на графике
 
-                DisplayPoint(790, 1, "ХУЙ");
-           }
+                var maxPoints = GetAbsorptionPeaks(selectedSubstance.Measurements,0.05).ToList();
+
+                dataGridView3.DataSource = maxPoints.Select(x=>new { Wavelength = x.Wavelength , Abs = x.Abs}).ToList();
+            }
         }
 
-     
+
 
         private void DisplayChart(SubstanceData substanceData)
         {
-
-            // Очистим старые серии, если они есть
             chart1.Series.Clear();
 
-            // Создадим новую серию для отображения данных
+            // Если серия не найдена, создаём новую
             var series = new Series
             {
                 Name = "Absorption Spectrum",
-                IsVisibleInLegend = false,
                 ChartType = SeriesChartType.Line,  // Тип графика (линия)
-                BorderWidth = 2
+                BorderWidth = 4,
+                IsVisibleInLegend = false,
             };
 
             // Добавляем данные из Measurements в серию
             foreach (var measurement in substanceData.Measurements)
             {
-                // measurement.Wavelength - X, measurement.Abs - Y
                 series.Points.AddXY(measurement.Wavelength, measurement.Abs);
             }
 
             // Добавляем серию на график
             chart1.Series.Add(series);
 
-            // Настроим оси графика
+            // Настроим оси графика (если нужно изменить их титулы)
             chart1.ChartAreas[0].AxisX.Title = "Wavelength (nm)";
             chart1.ChartAreas[0].AxisY.Title = "Absorption (AU)";
+
+            // Настройка частоты отображения меток на осях
+            chart1.ChartAreas[0].AxisX.Interval = 50; // Интервал между метками по оси X
+            //chart1.ChartAreas[0].AxisY.Interval = 0.1; // Интервал между метками по оси Y
+
+            // Дополнительные настройки оси X (например, начало и конец)
+            chart1.ChartAreas[0].AxisX.Minimum = substanceData.Measurements.Min(m => m.Wavelength);
+            chart1.ChartAreas[0].AxisX.Maximum = substanceData.Measurements.Max(m => m.Wavelength);
+
+            //// Дополнительные настройки оси Y
+            //chart1.ChartAreas[0].AxisY.Minimum = substanceData.Measurements.Min(m => m.Abs) - 0.1;
+            //chart1.ChartAreas[0].AxisY.Maximum = substanceData.Measurements.Max(m => m.Abs) + 0.1;
         }
 
-        private void DisplayPoint(double x, double y, string comment)
+        private List<(double Wavelength, double Abs)> GetAbsorptionPeaks(List<(double Wavelength, double Abs)> measurements, double threshold = 0.1)
         {
-            // Очищаем старые аннотации, если они есть
-            chart1.Annotations.Clear();
+            var peaks = new List<(double Wavelength, double Abs)>();
 
-            // Создаем серию для отображения одной точки
-            var series = new Series
+            // Ищем пики по соседним точкам
+            for (int i = 1; i < measurements.Count - 1; i++)
             {
-                Name = "Point",
-                IsVisibleInLegend = false,
-                ChartType = SeriesChartType.Point, // Тип графика (точка)
-                MarkerSize = 8,
-                MarkerStyle = MarkerStyle.Star6,
-                MarkerColor = Color.Red // Цвет точки
-            };
+                double prevAbs = measurements[i - 1].Abs;
+                double currentAbs = measurements[i].Abs;
+                double nextAbs = measurements[i + 1].Abs;
 
-            // Добавляем точку на график
-            series.Points.AddXY(x, y);
+                // Проверяем, что текущая точка больше соседей (локальный максимум)
+                if (currentAbs > prevAbs && currentAbs > nextAbs)
+                {
+                    // Если максимум превышает порог, добавляем его в список пиков
+                    if (currentAbs > threshold)
+                    {
+                        peaks.Add(measurements[i]);
+                    }
+                }
+            }
 
-            // Добавляем серию на график
-            chart1.Series.Add(series);
-
-            // Создаем аннотацию с комментарием
-            var annotation = new TextAnnotation
-            {
-                Text = comment, // Текст комментария
-                X = x, // Позиция X
-                Y = y, // Позиция Y
-                ForeColor = Color.Black, // Цвет текста
-                Font = new Font("Arial", 8, FontStyle.Regular),
-                Alignment = ContentAlignment.MiddleLeft // Размещение текста
-            };
-
-            // Добавляем аннотацию на график
-            chart1.Annotations.Add(annotation);
-
-            // Настроим оси графика, если необходимо
-            chart1.ChartAreas[0].AxisX.Title = "Wavelength (nm)";
-            chart1.ChartAreas[0].AxisY.Title = "Absorption (AU)";
+            return peaks;
         }
+
 
     }
 }

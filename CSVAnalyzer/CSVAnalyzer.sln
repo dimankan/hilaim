@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo ML", "Demo ML", "{33E3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1_MLNetExample_House", "1_MLNetExample_House\1_MLNetExample_House.csproj", "{86584270-4617-4603-AEB1-E9A8F3836CFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2_SentimentAnalysisExample", "2_SentimentAnalysisExample\2_SentimentAnalysisExample.csproj", "{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{86584270-4617-4603-AEB1-E9A8F3836CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86584270-4617-4603-AEB1-E9A8F3836CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86584270-4617-4603-AEB1-E9A8F3836CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{86584270-4617-4603-AEB1-E9A8F3836CFB} = {33E356A5-4D58-4B37-A1EF-C5635A5A457A}
+		{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02} = {33E356A5-4D58-4B37-A1EF-C5635A5A457A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF01C8F6-129C-4D46-B933-816D522F23BA}

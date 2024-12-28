@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVAnalyzer", "CSVAnalyzer\CSVAnalyzer.csproj", "{3038EE34-7BB8-42C5-A962-719E2261E038}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo ML", "Demo ML", "{33E356A5-4D58-4B37-A1EF-C5635A5A457A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1_MLNetExample_House", "1_MLNetExample_House\1_MLNetExample_House.csproj", "{86584270-4617-4603-AEB1-E9A8F3836CFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{3038EE34-7BB8-42C5-A962-719E2261E038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3038EE34-7BB8-42C5-A962-719E2261E038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3038EE34-7BB8-42C5-A962-719E2261E038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86584270-4617-4603-AEB1-E9A8F3836CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86584270-4617-4603-AEB1-E9A8F3836CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86584270-4617-4603-AEB1-E9A8F3836CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86584270-4617-4603-AEB1-E9A8F3836CFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{86584270-4617-4603-AEB1-E9A8F3836CFB} = {33E356A5-4D58-4B37-A1EF-C5635A5A457A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF01C8F6-129C-4D46-B933-816D522F23BA}

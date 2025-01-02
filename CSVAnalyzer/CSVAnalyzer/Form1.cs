@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CSVAnalyzer
 {
@@ -16,9 +19,48 @@ namespace CSVAnalyzer
         public Form1()
         {
             InitializeComponent();
+            tBarSmooth.Value = 21;
+            tbSmooth.Text = "21";
+
+            tbThreshold.Text = "0.05";
+            tBarThreshold.Value = 50;
         }
 
         public SubstanceData SelectedSubstanceData { get; set; }
+        public int SmoothSize
+        {
+            get
+            {
+                try
+                {
+                    int smoothSize = Convert.ToInt32(tbSmooth.Text);
+                    return smoothSize;
+                }
+                catch (Exception ex)
+                {
+                    return 5;
+                }
+            }
+        }
+        public List<(double Wavelength, double Abs)> SmoothedMeasurments
+        {
+            get
+            {
+                if(SelectedSubstanceData == null)   
+                    return null;
+
+                try
+                {
+                    var smoothedMeasurments = SubstanceData.Smooth(SelectedSubstanceData.Measurements, SmoothSize);
+                    return smoothedMeasurments;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(@"D:\Языки программирования\GitHub_Hilaim\ABS_DMSO_10uM.csv");
@@ -49,21 +91,39 @@ namespace CSVAnalyzer
                     dataGridView2.DataSource = measurements;
                 }
 
+                DisplayChart1();
+                DisplayChart2();
 
-                DisplayChart(chart1, SelectedSubstanceData.Measurements);
-
-                var smoothedMeasurments = SubstanceData.Smooth(SelectedSubstanceData.Measurements, 14);
-                DisplayChart(chart2, smoothedMeasurments, SelectedSubstanceData.Measurements[SelectedSubstanceData.Measurements.Count-1].Wavelength  );
                 // Обработка и отображение данных на графике
 
-                var maxPoints = GetAbsorptionPeaks(SelectedSubstanceData.Measurements, 0.05).ToList();
-
-                dataGridView3.DataSource = maxPoints.Select(x => new {  x.Wavelength, x.Abs }).ToList();
+                GetMaxPoints();
             }
         }
 
 
+        #region DisplayChart
+        private void DisplayChart1()
+        {
+            DisplayChart(chart1, SelectedSubstanceData.Measurements);
+        }
+        private void DisplayChart2()
+        {
+            if (SelectedSubstanceData == null)
+                return;
 
+            try
+            {
+                var startPoint = SelectedSubstanceData.Measurements[SelectedSubstanceData.Measurements.Count - 1].Wavelength;
+
+                var endPoint = SelectedSubstanceData.Measurements[0].Wavelength;
+
+                DisplayChart(chart2, SmoothedMeasurments, startPoint, endPoint);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void DisplayChart(Chart chart, List<(double Wavelength, double Abs)> measurements, double? xAxisMin = null, double? xAxisMax = null)
         {
             chart.Series.Clear();
@@ -95,9 +155,61 @@ namespace CSVAnalyzer
 
             // Дополнительные настройки оси X (например, начало и конец)
             chart.ChartAreas[0].AxisX.Minimum = xAxisMin ?? measurements.Min(m => m.Wavelength);
-            chart.ChartAreas[0].AxisX.Maximum = xAxisMax ??  measurements.Max(m => m.Wavelength);
+            chart.ChartAreas[0].AxisX.Maximum = xAxisMax ?? measurements.Max(m => m.Wavelength);
         }
 
+        #endregion
+
+        private void tBarSmooth_Scroll(object sender, EventArgs e)
+        {
+            tbSmooth.Text = tBarSmooth.Value.ToString();
+        }
+
+        private void tbSmooth_TextChanged(object sender, EventArgs e)
+        {
+            // Проверяем, является ли ввод числом
+            if (!int.TryParse(tbSmooth.Text, out int value) || value < 0)
+            {
+                // Если не число или вне диапазона, удаляем последний символ
+                MessageBox.Show("Введите число от 1.", "Неверный ввод", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbSmooth.Text = tBarSmooth.Value.ToString(); // Очищаем текстовое поле
+                return;
+            }
+
+            DisplayChart2();
+            GetMaxPoints();
+        }
+
+
+        private void GetMaxPoints()
+        {
+            if (SmoothedMeasurments == null)
+                return;
+
+            var treshold = Convert.ToDouble(tbThreshold.Text, CultureInfo.InvariantCulture);
+            var maxPoints = GetAbsorptionPeaks(SmoothedMeasurments, treshold).ToList();
+
+            dataGridView3.DataSource = maxPoints.Select(x => new { Wavelength = Math.Round(x.Wavelength) }).ToList();
+        }
+
+        private void tBarThreshold_Scroll(object sender, EventArgs e)
+        {
+            tbThreshold.Text = (Convert.ToDouble(tBarThreshold.Value, CultureInfo.InvariantCulture) / 1000).ToString().Replace(',','.');
+        }
+
+        private void tbThreshold_TextChanged(object sender, EventArgs e)
+        {
+            //var valuePoint = 
+            //// Проверяем, является ли ввод числом
+            if (!Double.TryParse(tbThreshold.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out Double value) || value < (double)0)
+            {
+                //// Если не число или вне диапазона, удаляем последний символ
+                MessageBox.Show("Введите число не меньше 0.", "Неверный ввод", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbThreshold.Text = ((double)tBarThreshold.Value / 1000).ToString().Replace(',','.'); // Очищаем текстовое поле
+                return;
+            }
+            GetMaxPoints();
+        }
         private List<(double Wavelength, double Abs)> GetAbsorptionPeaks(List<(double Wavelength, double Abs)> measurements, double threshold = 0.1)
         {
             var peaks = new List<(double Wavelength, double Abs)>();
@@ -122,7 +234,6 @@ namespace CSVAnalyzer
 
             return peaks;
         }
-
 
     }
 }

@@ -18,6 +18,7 @@ namespace CSVAnalyzer
             InitializeComponent();
         }
 
+        public SubstanceData SelectedSubstanceData { get; set; }
         private void button2_Click(object sender, EventArgs e)
         {
             List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(@"D:\Языки программирования\GitHub_Hilaim\ABS_DMSO_10uM.csv");
@@ -35,33 +36,37 @@ namespace CSVAnalyzer
                 var selectedRow = dataGridView1.SelectedRows[0];
 
                 // Извлекаем привязанный объект
-                SubstanceData selectedSubstance = (SubstanceData)selectedRow.DataBoundItem;
+                SelectedSubstanceData = (SubstanceData)selectedRow.DataBoundItem;
 
-                if (selectedSubstance != null)
+                if (SelectedSubstanceData != null)
                 {
                     // Преобразуем Measurements для отображения в DataGridView2
-                    var measurements = selectedSubstance.Measurements
-                        .Select(m => new { Wavelength = m.Wavelength, Abs = m.Abs })
+                    var measurements = SelectedSubstanceData.Measurements
+                        .Select(m => new { m.Wavelength, m.Abs })
                         .ToList();
 
                     // Привязываем данные ко второму DataGridView
                     dataGridView2.DataSource = measurements;
                 }
 
-                DisplayChart(selectedSubstance);
+
+                DisplayChart(chart1, SelectedSubstanceData.Measurements);
+
+                var smoothedMeasurments = SubstanceData.Smooth(SelectedSubstanceData.Measurements, 14);
+                DisplayChart(chart2, smoothedMeasurments, SelectedSubstanceData.Measurements[SelectedSubstanceData.Measurements.Count-1].Wavelength  );
                 // Обработка и отображение данных на графике
 
-                var maxPoints = GetAbsorptionPeaks(selectedSubstance.Measurements,0.05).ToList();
+                var maxPoints = GetAbsorptionPeaks(SelectedSubstanceData.Measurements, 0.05).ToList();
 
-                dataGridView3.DataSource = maxPoints.Select(x=>new { Wavelength = x.Wavelength , Abs = x.Abs}).ToList();
+                dataGridView3.DataSource = maxPoints.Select(x => new {  x.Wavelength, x.Abs }).ToList();
             }
         }
 
 
 
-        private void DisplayChart(SubstanceData substanceData)
+        private void DisplayChart(Chart chart, List<(double Wavelength, double Abs)> measurements, double? xAxisMin = null, double? xAxisMax = null)
         {
-            chart1.Series.Clear();
+            chart.Series.Clear();
 
             // Если серия не найдена, создаём новую
             var series = new Series
@@ -73,29 +78,24 @@ namespace CSVAnalyzer
             };
 
             // Добавляем данные из Measurements в серию
-            foreach (var measurement in substanceData.Measurements)
+            foreach (var measurement in measurements)
             {
                 series.Points.AddXY(measurement.Wavelength, measurement.Abs);
             }
 
             // Добавляем серию на график
-            chart1.Series.Add(series);
+            chart.Series.Add(series);
 
             // Настроим оси графика (если нужно изменить их титулы)
-            chart1.ChartAreas[0].AxisX.Title = "Wavelength (nm)";
-            chart1.ChartAreas[0].AxisY.Title = "Absorption (AU)";
+            chart.ChartAreas[0].AxisX.Title = "Wavelength (nm)";
+            chart.ChartAreas[0].AxisY.Title = "Absorption (AU)";
 
             // Настройка частоты отображения меток на осях
-            chart1.ChartAreas[0].AxisX.Interval = 50; // Интервал между метками по оси X
-            //chart1.ChartAreas[0].AxisY.Interval = 0.1; // Интервал между метками по оси Y
+            chart.ChartAreas[0].AxisX.Interval = 50; // Интервал между метками по оси X
 
             // Дополнительные настройки оси X (например, начало и конец)
-            chart1.ChartAreas[0].AxisX.Minimum = substanceData.Measurements.Min(m => m.Wavelength);
-            chart1.ChartAreas[0].AxisX.Maximum = substanceData.Measurements.Max(m => m.Wavelength);
-
-            //// Дополнительные настройки оси Y
-            //chart1.ChartAreas[0].AxisY.Minimum = substanceData.Measurements.Min(m => m.Abs) - 0.1;
-            //chart1.ChartAreas[0].AxisY.Maximum = substanceData.Measurements.Max(m => m.Abs) + 0.1;
+            chart.ChartAreas[0].AxisX.Minimum = xAxisMin ?? measurements.Min(m => m.Wavelength);
+            chart.ChartAreas[0].AxisX.Maximum = xAxisMax ??  measurements.Max(m => m.Wavelength);
         }
 
         private List<(double Wavelength, double Abs)> GetAbsorptionPeaks(List<(double Wavelength, double Abs)> measurements, double threshold = 0.1)

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_MLNetExample_House", "1_M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2_SentimentAnalysisExample", "2_SentimentAnalysisExample\2_SentimentAnalysisExample.csproj", "{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3_Save_and_load_model", "3_Save_and_load_model\3_Save_and_load_model.csproj", "{95306D09-E950-4C7C-A9E3-37EB2143846C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3_Save_and_load_model", "3_Save_and_load_model\3_Save_and_load_model.csproj", "{95306D09-E950-4C7C-A9E3-37EB2143846C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,29 +1,39 @@
-﻿using System;
+﻿using CSVAnalyzer.Json;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CSVAnalyzer
 {
     public partial class Form1 : Form
     {
+        private readonly JsonFileManager<AppSettings> _jsonManager;
+        private AppSettings _settings;
+
         public Form1()
         {
             InitializeComponent();
-            tBarSmooth.Value = 21;
-            tbSmooth.Text = "21";
+           
+            // Указываем путь к файлу настроек
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            // Создаем менеджер для работы с JSON
+            _jsonManager = new JsonFileManager<AppSettings>(filePath);
+            // Считываем настройки из файла
+            _settings = _jsonManager.Read();
+            
 
-            tbThreshold.Text = "0.05";
-            tBarThreshold.Value = 50;
+            tBarSmooth.Value = Convert.ToInt32(_settings.SmoothSize);
+            tbSmooth.Text = _settings.SmoothSize;
+
+            tbThreshold.Text = _settings.Threshold;
+            tBarThreshold.Value = Convert.ToInt32(Convert.ToDouble(_settings.Threshold.Replace(".",",")) * 1000);
+
         }
 
         public SubstanceData SelectedSubstanceData { get; set; }
@@ -158,7 +168,7 @@ namespace CSVAnalyzer
             chart.ChartAreas[0].AxisX.Maximum = xAxisMax ?? measurements.Max(m => m.Wavelength);
         }
 
-        private void AddVerticalLine(Chart chart, List<double> xAxisValueCollection)
+        private void AddVerticalLine(Chart chart, List<double> xAxisValueCollection, Color color)
         {
 
             chart.Annotations.Clear();
@@ -168,7 +178,7 @@ namespace CSVAnalyzer
                 var lineAnnotation = new VerticalLineAnnotation();
                 lineAnnotation.AxisXName = "ChartArea1\\rX";
                 lineAnnotation.Height = 121D;
-                lineAnnotation.LineColor = Color.Green;
+                lineAnnotation.LineColor = color;
                 lineAnnotation.X = xAxisValue; lineAnnotation.Y = 0;
 
                 // Добавляем аннотацию на график
@@ -178,6 +188,7 @@ namespace CSVAnalyzer
 
 
         #endregion
+        #region Smooth
 
         private void tBarSmooth_Scroll(object sender, EventArgs e)
         {
@@ -197,25 +208,13 @@ namespace CSVAnalyzer
 
             DisplayChart2();
             GetMaxPoints();
+
+            _settings.SmoothSize = tbSmooth.Text;
+            _jsonManager.Write(_settings);
         }
 
-
-        private void GetMaxPoints()
-        {
-            if (SmoothedMeasurments == null)
-                return;
-
-            var treshold = Convert.ToDouble(tbThreshold.Text, CultureInfo.InvariantCulture);
-            var maxPoints = GetAbsorptionPeaks(SmoothedMeasurments, treshold).ToList();
-
-            var maxPointsRound = maxPoints.Select(x => new { Wavelength = Math.Round(x.Wavelength) }).ToList();
-
-            dataGridView3.DataSource = maxPointsRound;
-
-            AddVerticalLine(chart1, maxPointsRound.Select(x => x.Wavelength).ToList());
-            AddVerticalLine(chart2, maxPointsRound.Select(x => x.Wavelength).ToList());
-        }
-
+        #endregion
+        #region Threshold
         private void tBarThreshold_Scroll(object sender, EventArgs e)
         {
             tbThreshold.Text = (Convert.ToDouble(tBarThreshold.Value, CultureInfo.InvariantCulture) / 1000).ToString().Replace(',', '.');
@@ -233,6 +232,26 @@ namespace CSVAnalyzer
                 return;
             }
             GetMaxPoints();
+
+            _settings.Threshold = tbThreshold.Text;
+            _jsonManager.Write(_settings);
+        }
+        #endregion
+
+        private void GetMaxPoints()
+        {
+            if (SmoothedMeasurments == null)
+                return;
+
+            var treshold = Convert.ToDouble(tbThreshold.Text, CultureInfo.InvariantCulture);
+            var maxPoints = GetAbsorptionPeaks(SmoothedMeasurments, treshold).ToList();
+
+            var maxPointsRound = maxPoints.Select(x => new { Wavelength = Math.Round(x.Wavelength) }).ToList();
+
+            dataGridView3.DataSource = maxPointsRound;
+
+            AddVerticalLine(chart1, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Green);
+            AddVerticalLine(chart2, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Green);
         }
         private List<(double Wavelength, double Abs)> GetAbsorptionPeaks(List<(double Wavelength, double Abs)> measurements, double threshold = 0.1)
         {

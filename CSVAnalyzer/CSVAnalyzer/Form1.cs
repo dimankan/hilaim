@@ -46,7 +46,7 @@ namespace CSVAnalyzer
         {
             get
             {
-                if(SelectedSubstanceData == null)   
+                if (SelectedSubstanceData == null)
                     return null;
 
                 try
@@ -158,6 +158,25 @@ namespace CSVAnalyzer
             chart.ChartAreas[0].AxisX.Maximum = xAxisMax ?? measurements.Max(m => m.Wavelength);
         }
 
+        private void AddVerticalLine(Chart chart, List<double> xAxisValueCollection)
+        {
+
+            chart.Annotations.Clear();
+
+            foreach (var xAxisValue in xAxisValueCollection)
+            {
+                var lineAnnotation = new VerticalLineAnnotation();
+                lineAnnotation.AxisXName = "ChartArea1\\rX";
+                lineAnnotation.Height = 121D;
+                lineAnnotation.LineColor = Color.Green;
+                lineAnnotation.X = xAxisValue; lineAnnotation.Y = 0;
+
+                // Добавляем аннотацию на график
+                chart.Annotations.Add(lineAnnotation);
+            }
+        }
+
+
         #endregion
 
         private void tBarSmooth_Scroll(object sender, EventArgs e)
@@ -189,12 +208,17 @@ namespace CSVAnalyzer
             var treshold = Convert.ToDouble(tbThreshold.Text, CultureInfo.InvariantCulture);
             var maxPoints = GetAbsorptionPeaks(SmoothedMeasurments, treshold).ToList();
 
-            dataGridView3.DataSource = maxPoints.Select(x => new { Wavelength = Math.Round(x.Wavelength) }).ToList();
+            var maxPointsRound = maxPoints.Select(x => new { Wavelength = Math.Round(x.Wavelength) }).ToList();
+
+            dataGridView3.DataSource = maxPointsRound;
+
+            AddVerticalLine(chart1, maxPointsRound.Select(x => x.Wavelength).ToList());
+            AddVerticalLine(chart2, maxPointsRound.Select(x => x.Wavelength).ToList());
         }
 
         private void tBarThreshold_Scroll(object sender, EventArgs e)
         {
-            tbThreshold.Text = (Convert.ToDouble(tBarThreshold.Value, CultureInfo.InvariantCulture) / 1000).ToString().Replace(',','.');
+            tbThreshold.Text = (Convert.ToDouble(tBarThreshold.Value, CultureInfo.InvariantCulture) / 1000).ToString().Replace(',', '.');
         }
 
         private void tbThreshold_TextChanged(object sender, EventArgs e)
@@ -205,7 +229,7 @@ namespace CSVAnalyzer
             {
                 //// Если не число или вне диапазона, удаляем последний символ
                 MessageBox.Show("Введите число не меньше 0.", "Неверный ввод", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tbThreshold.Text = ((double)tBarThreshold.Value / 1000).ToString().Replace(',','.'); // Очищаем текстовое поле
+                tbThreshold.Text = ((double)tBarThreshold.Value / 1000).ToString().Replace(',', '.'); // Очищаем текстовое поле
                 return;
             }
             GetMaxPoints();

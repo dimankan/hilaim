@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2_SentimentAnalysisExample"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3_Save_and_load_model", "3_Save_and_load_model\3_Save_and_load_model.csproj", "{95306D09-E950-4C7C-A9E3-37EB2143846C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo WinForms", "Demo WinForms", "{6D69CAAD-81FB-4900-A32E-95CBE232AF81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Winforms Chart Demo", "Winforms Chart Demo\Winforms Chart Demo.csproj", "{DF007A61-76FD-4D4F-BE40-DDF819DC4A14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{95306D09-E950-4C7C-A9E3-37EB2143846C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95306D09-E950-4C7C-A9E3-37EB2143846C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95306D09-E950-4C7C-A9E3-37EB2143846C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF007A61-76FD-4D4F-BE40-DDF819DC4A14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF007A61-76FD-4D4F-BE40-DDF819DC4A14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF007A61-76FD-4D4F-BE40-DDF819DC4A14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF007A61-76FD-4D4F-BE40-DDF819DC4A14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +51,7 @@ Global
 		{86584270-4617-4603-AEB1-E9A8F3836CFB} = {33E356A5-4D58-4B37-A1EF-C5635A5A457A}
 		{0FD7AFE7-C7F0-4B10-8369-3E10ADC12C02} = {33E356A5-4D58-4B37-A1EF-C5635A5A457A}
 		{95306D09-E950-4C7C-A9E3-37EB2143846C} = {33E356A5-4D58-4B37-A1EF-C5635A5A457A}
+		{DF007A61-76FD-4D4F-BE40-DDF819DC4A14} = {6D69CAAD-81FB-4900-A32E-95CBE232AF81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF01C8F6-129C-4D46-B933-816D522F23BA}

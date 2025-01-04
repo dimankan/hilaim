@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation verticalLineAnnotation2 = new System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation verticalLineAnnotation1 = new System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button2 = new System.Windows.Forms.Button();
@@ -52,11 +52,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.dgvSelectedMaxPoints = new System.Windows.Forms.DataGridView();
+            this.dgvSelected = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btClearSelectedRows = new System.Windows.Forms.Button();
+            this.btAddAllMaxPoints = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -69,7 +69,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tBarSmooth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tBarThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedMaxPoints)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelected)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,24 +83,24 @@
             // 
             // chart1
             // 
-            verticalLineAnnotation2.AxisXName = "ChartArea1\\rX";
-            verticalLineAnnotation2.Name = "VerticalLineAnnotation1";
-            verticalLineAnnotation2.X = 400D;
-            this.chart1.Annotations.Add(verticalLineAnnotation2);
+            verticalLineAnnotation1.AxisXName = "ChartArea1\\rX";
+            verticalLineAnnotation1.Name = "VerticalLineAnnotation1";
+            verticalLineAnnotation1.X = 400D;
+            this.chart1.Annotations.Add(verticalLineAnnotation1);
             this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(233)))), ((int)(((byte)(224)))));
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(3, 308);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.IsVisibleInLegend = false;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.IsVisibleInLegend = false;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(1359, 299);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
@@ -150,7 +150,9 @@
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView2.Size = new System.Drawing.Size(307, 235);
             this.dataGridView2.TabIndex = 5;
+            this.dataGridView2.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView2_CellMouseDoubleClick);
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
+            this.dataGridView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView2_KeyDown);
             // 
             // dataGridView3
             // 
@@ -164,24 +166,26 @@
             this.dataGridView3.RowTemplate.Height = 24;
             this.dataGridView3.Size = new System.Drawing.Size(140, 235);
             this.dataGridView3.TabIndex = 5;
+            this.dataGridView3.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellDoubleClick);
             this.dataGridView3.SelectionChanged += new System.EventHandler(this.dataGridView3_SelectionChanged);
+            this.dataGridView3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView3_KeyDown);
             // 
             // chart2
             // 
             this.chart2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(233)))), ((int)(((byte)(224)))));
-            chartArea4.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea4);
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chart2.Legends.Add(legend4);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(3, 3);
             this.chart2.Name = "chart2";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.IsVisibleInLegend = false;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart2.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.IsVisibleInLegend = false;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart2.Series.Add(series2);
             this.chart2.Size = new System.Drawing.Size(1359, 299);
             this.chart2.TabIndex = 2;
             this.chart2.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
@@ -290,18 +294,18 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Max points";
             // 
-            // dgvSelectedMaxPoints
+            // dgvSelected
             // 
-            this.dgvSelectedMaxPoints.AllowUserToResizeRows = false;
-            this.dgvSelectedMaxPoints.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
-            this.dgvSelectedMaxPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSelectedMaxPoints.Location = new System.Drawing.Point(998, 93);
-            this.dgvSelectedMaxPoints.Name = "dgvSelectedMaxPoints";
-            this.dgvSelectedMaxPoints.RowHeadersVisible = false;
-            this.dgvSelectedMaxPoints.RowHeadersWidth = 51;
-            this.dgvSelectedMaxPoints.RowTemplate.Height = 24;
-            this.dgvSelectedMaxPoints.Size = new System.Drawing.Size(140, 235);
-            this.dgvSelectedMaxPoints.TabIndex = 5;
+            this.dgvSelected.AllowUserToResizeRows = false;
+            this.dgvSelected.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
+            this.dgvSelected.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSelected.Location = new System.Drawing.Point(998, 93);
+            this.dgvSelected.Name = "dgvSelected";
+            this.dgvSelected.RowHeadersVisible = false;
+            this.dgvSelected.RowHeadersWidth = 51;
+            this.dgvSelected.RowTemplate.Height = 24;
+            this.dgvSelected.Size = new System.Drawing.Size(140, 235);
+            this.dgvSelected.TabIndex = 5;
             // 
             // label6
             // 
@@ -324,29 +328,31 @@
             this.button1.Text = "Сохранить";
             this.button1.UseVisualStyleBackColor = false;
             // 
-            // button3
+            // btClearSelectedRows
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(156)))), ((int)(((byte)(151)))));
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.Location = new System.Drawing.Point(1144, 277);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(140, 51);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Очистить";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btClearSelectedRows.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(156)))), ((int)(((byte)(151)))));
+            this.btClearSelectedRows.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btClearSelectedRows.FlatAppearance.BorderSize = 0;
+            this.btClearSelectedRows.Location = new System.Drawing.Point(1144, 277);
+            this.btClearSelectedRows.Name = "btClearSelectedRows";
+            this.btClearSelectedRows.Size = new System.Drawing.Size(140, 51);
+            this.btClearSelectedRows.TabIndex = 10;
+            this.btClearSelectedRows.Text = "Очистить";
+            this.btClearSelectedRows.UseVisualStyleBackColor = false;
+            this.btClearSelectedRows.Click += new System.EventHandler(this.btClearSelectedRows_Click);
             // 
-            // button4
+            // btAddAllMaxPoints
             // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(146)))), ((int)(((byte)(186)))));
-            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button4.FlatAppearance.BorderSize = 0;
-            this.button4.Location = new System.Drawing.Point(913, 159);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(79, 94);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "Выбрать все";
-            this.button4.UseVisualStyleBackColor = false;
+            this.btAddAllMaxPoints.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(146)))), ((int)(((byte)(186)))));
+            this.btAddAllMaxPoints.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btAddAllMaxPoints.FlatAppearance.BorderSize = 0;
+            this.btAddAllMaxPoints.Location = new System.Drawing.Point(913, 159);
+            this.btAddAllMaxPoints.Name = "btAddAllMaxPoints";
+            this.btAddAllMaxPoints.Size = new System.Drawing.Size(79, 94);
+            this.btAddAllMaxPoints.TabIndex = 10;
+            this.btAddAllMaxPoints.Text = "Выбрать все";
+            this.btAddAllMaxPoints.UseVisualStyleBackColor = false;
+            this.btAddAllMaxPoints.Click += new System.EventHandler(this.btAddAllMaxPoints_Click);
             // 
             // label7
             // 
@@ -403,8 +409,8 @@
             this.ClientSize = new System.Drawing.Size(1365, 1019);
             this.Controls.Add(this.btTest);
             this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btAddAllMaxPoints);
+            this.Controls.Add(this.btClearSelectedRows);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label6);
@@ -418,7 +424,7 @@
             this.Controls.Add(this.tBarThreshold);
             this.Controls.Add(this.tBarSmooth);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.dgvSelectedMaxPoints);
+            this.Controls.Add(this.dgvSelected);
             this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
@@ -435,7 +441,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tBarSmooth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tBarThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedMaxPoints)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelected)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -460,11 +466,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView dgvSelectedMaxPoints;
+        private System.Windows.Forms.DataGridView dgvSelected;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btClearSelectedRows;
+        private System.Windows.Forms.Button btAddAllMaxPoints;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numericUpDown1;

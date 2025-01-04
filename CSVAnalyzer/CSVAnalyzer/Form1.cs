@@ -268,8 +268,8 @@ namespace CSVAnalyzer
             dataGridView3.DataSource = maxPointsRound;
             dataGridView3.ClearSelection();
 
-            AddVerticalLine(chart1, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Green);
-            AddVerticalLine(chart2, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Green);
+            AddVerticalLine(chart1, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Indigo);
+            AddVerticalLine(chart2, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Indigo);
         }
         private List<(double Wavelength, double Abs)> GetAbsorptionPeaks(List<(double Wavelength, double Abs)> measurements, double threshold = 0.1)
         {
@@ -359,6 +359,85 @@ namespace CSVAnalyzer
                     // Игнорируем ошибки
                 }
             }
+        }
+
+        List<string> selectedMaxPoints = new List<string>();
+        private void AddMaxPoints(string maxPoints)
+        {
+            selectedMaxPoints.Add(maxPoints);
+
+            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".",","))) }).Distinct().ToList();
+        }
+        
+        private void btAddAllMaxPoints_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView3.Rows)
+            {
+                AddMaxPoints(row.Cells[0].Value.ToString());
+            }
+        }
+
+        private void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Проверяем, что была выбрана ячейка, а не заголовок или пустое пространство
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Получаем значение ячейки
+                object cellValue = dataGridView3.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+              
+                AddMaxPoints(cellValue.ToString());
+            }
+        }
+
+        private void dataGridView3_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Проверяем, что была нажата клавиша Enter
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Получаем текущую выбранную ячейку
+                object cellValue = dataGridView3.SelectedCells[0].Value;
+
+                AddMaxPoints(cellValue.ToString());
+
+                // Отменяем стандартное поведение при нажатии Enter
+                e.Handled = true;
+            }
+        }
+        private void dataGridView2_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Проверяем, что была нажата клавиша Enter
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Получаем текущую выбранную ячейку
+                object cellValue = dataGridView2.SelectedCells[0].Value;
+
+                // Вызываем метод AddMaxPoints, передавая значение ячейки
+                AddMaxPoints(cellValue.ToString());
+
+                // Отменяем стандартное поведение при нажатии Enter
+                e.Handled = true;
+            }
+        }
+
+        private void dataGridView2_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // Проверяем, что была выбрана хотя бы одна строка
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                // Получаем значение из столбца "Wavelength" первой выделенной строки
+                object heyValue = dataGridView2.SelectedRows[0].Cells["Wavelength"].Value;
+
+                // Вызываем метод AddMaxPoints, передавая значение ячейки
+                AddMaxPoints(heyValue.ToString());
+
+            }
+        }
+
+        private void btClearSelectedRows_Click(object sender, EventArgs e)
+        {
+            selectedMaxPoints.Clear();
+
+            dgvSelected.DataSource = selectedMaxPoints;
         }
     }
 }

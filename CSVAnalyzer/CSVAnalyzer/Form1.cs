@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -15,11 +14,17 @@ namespace CSVAnalyzer
     public partial class Form1 : Form
     {
         private readonly JsonFileManager<AppSettings> _jsonManager;
+        private readonly CsvWriter _csvWriter;
         private AppSettings _settings;
+
 
         public Form1()
         {
             InitializeComponent();
+            _csvWriter = new CsvWriter("data.csv");
+
+            var models = _csvWriter.ReadModels();
+            dgvCsvResult.DataSource = models;
 
             // Указываем путь к файлу настроек
             var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
@@ -36,6 +41,7 @@ namespace CSVAnalyzer
             tBarThreshold.Value = Convert.ToInt32(Convert.ToDouble(_settings.Threshold.Replace(".", ",")) * 1000);
 
             numericUpDown1.Value = _settings.ChartInterval;
+
         }
 
         public SubstanceData SelectedSubstanceData { get; set; }
@@ -73,9 +79,11 @@ namespace CSVAnalyzer
             }
         }
 
+        public string PathFile { get; set; } = @"D:\Языки программирования\GitHub_Hilaim\ABS_DMSO_10uM.csv";
+
         private void button2_Click(object sender, EventArgs e)
         {
-            List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(@"D:\Языки программирования\GitHub_Hilaim\ABS_DMSO_10uM.csv");
+            List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(PathFile);
 
             dataGridView1.DataSource = dataCsv;
 
@@ -370,7 +378,7 @@ namespace CSVAnalyzer
 
             selectedMaxPoints.Add(maxPointsRound);
 
-            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = x}).Distinct().ToList();
+            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = x }).Distinct().ToList();
         }
 
         private void btAddAllMaxPoints_Click(object sender, EventArgs e)
@@ -465,8 +473,8 @@ namespace CSVAnalyzer
 
         private void dgvSelected_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            AddVerticalLine(chart1, selectedMaxPoints.Select(x=>Convert.ToDouble(x)).ToList(), Color.YellowGreen);
-            AddVerticalLine(chart2, selectedMaxPoints.Select(x=>Convert.ToDouble(x)).ToList(), Color.YellowGreen);
+            AddVerticalLine(chart1, selectedMaxPoints.Select(x => Convert.ToDouble(x)).ToList(), Color.YellowGreen);
+            AddVerticalLine(chart2, selectedMaxPoints.Select(x => Convert.ToDouble(x)).ToList(), Color.YellowGreen);
         }
 
         private void dgvSelected_SelectionChanged(object sender, EventArgs e)
@@ -503,6 +511,54 @@ namespace CSVAnalyzer
                 object cellValue = dgvSelected.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
                 ClearSingleRows(cellValue.ToString());
+            }
+        }
+
+        private void btSave_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("Нет данных для сохранения");
+                return;
+            }
+            var objectName = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+
+
+            if(dgvSelected.Rows.Count == 0)
+            {
+                MessageBox.Show("Не выбраны точки максимумов");
+                return;
+            }
+
+            var time = DateTime.Now;
+            foreach (var maxPoint in selectedMaxPoints)
+            {
+                // Сохранение новой модели
+                var model = new OutputModel
+                {
+                    TimeStamp = time,
+                    FileName = Path.GetFileName(PathFile),
+                    ObjectName = objectName,
+                    Wavelength = Convert.ToInt32(maxPoint)
+                };
+                _csvWriter.SaveModel(model);
+            }
+
+            // Чтение моделей из файла
+            var models = _csvWriter.ReadModels();
+
+            dgvCsvResult.DataSource = models;
+        }
+
+        private void dgvCsvResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Проверяем, что текущая ячейка содержит значение типа DateTime
+            if (e.ColumnIndex == 0 && e.Value is DateTime)
+            {
+                // Преобразуем значение ячейки в строку в нужном формате
+                e.Value = ((DateTime)e.Value).ToString("yyyy.MM.dd HH:mm:ss");
+                // Указываем, что значение ячейки было изменено
+                e.FormattingApplied = true;
             }
         }
     }

@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation verticalLineAnnotation1 = new System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation verticalLineAnnotation2 = new System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button2 = new System.Windows.Forms.Button();
@@ -54,13 +54,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.dgvSelected = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btSave = new System.Windows.Forms.Button();
             this.btClearSelectedRows = new System.Windows.Forms.Button();
             this.btAddAllMaxPoints = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.dgvCsvResult = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -71,7 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tBarThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelected)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCsvResult)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -84,25 +84,25 @@
             // 
             // chart1
             // 
-            verticalLineAnnotation1.AxisXName = "ChartArea1\\rX";
-            verticalLineAnnotation1.Name = "VerticalLineAnnotation1";
-            verticalLineAnnotation1.X = 400D;
-            this.chart1.Annotations.Add(verticalLineAnnotation1);
+            verticalLineAnnotation2.AxisXName = "ChartArea1\\rX";
+            verticalLineAnnotation2.Name = "VerticalLineAnnotation1";
+            verticalLineAnnotation2.X = 400D;
+            this.chart1.Annotations.Add(verticalLineAnnotation2);
             this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(233)))), ((int)(((byte)(224)))));
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(3, 308);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.IsVisibleInLegend = false;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(1681, 299);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.IsVisibleInLegend = false;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
+            this.chart1.Size = new System.Drawing.Size(1943, 299);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
             // 
@@ -174,20 +174,20 @@
             // chart2
             // 
             this.chart2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(233)))), ((int)(((byte)(224)))));
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea4);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.chart2.Legends.Add(legend4);
             this.chart2.Location = new System.Drawing.Point(3, 3);
             this.chart2.Name = "chart2";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.IsVisibleInLegend = false;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(1681, 299);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.IsVisibleInLegend = false;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart2.Series.Add(series4);
+            this.chart2.Size = new System.Drawing.Size(1943, 299);
             this.chart2.TabIndex = 2;
             this.chart2.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
             // 
@@ -205,7 +205,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1687, 610);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1949, 610);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // tBarSmooth
@@ -320,17 +320,18 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "Selected max points";
             // 
-            // button1
+            // btSave
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(160)))), ((int)(((byte)(107)))));
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.Location = new System.Drawing.Point(1144, 93);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(96, 51);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Сохранить";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(160)))), ((int)(((byte)(107)))));
+            this.btSave.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btSave.FlatAppearance.BorderSize = 0;
+            this.btSave.Location = new System.Drawing.Point(1144, 93);
+            this.btSave.Name = "btSave";
+            this.btSave.Size = new System.Drawing.Size(96, 51);
+            this.btSave.TabIndex = 3;
+            this.btSave.Text = "Сохранить";
+            this.btSave.UseVisualStyleBackColor = false;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
             // btClearSelectedRows
             // 
@@ -395,30 +396,31 @@
             this.numericUpDown1.TabIndex = 11;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // dataGridView4
+            // dgvCsvResult
             // 
-            this.dataGridView4.AllowUserToResizeRows = false;
-            this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView4.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
-            this.dataGridView4.Location = new System.Drawing.Point(1246, 93);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowHeadersVisible = false;
-            this.dataGridView4.RowHeadersWidth = 51;
-            this.dataGridView4.RowTemplate.Height = 24;
-            this.dataGridView4.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView4.Size = new System.Drawing.Size(427, 235);
-            this.dataGridView4.TabIndex = 4;
-            this.dataGridView4.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            this.dgvCsvResult.AllowUserToResizeRows = false;
+            this.dgvCsvResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCsvResult.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
+            this.dgvCsvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCsvResult.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
+            this.dgvCsvResult.Location = new System.Drawing.Point(1246, 93);
+            this.dgvCsvResult.Name = "dgvCsvResult";
+            this.dgvCsvResult.RowHeadersVisible = false;
+            this.dgvCsvResult.RowHeadersWidth = 51;
+            this.dgvCsvResult.RowTemplate.Height = 24;
+            this.dgvCsvResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvCsvResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvCsvResult.Size = new System.Drawing.Size(691, 235);
+            this.dgvCsvResult.TabIndex = 4;
+            this.dgvCsvResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCsvResult_CellFormatting);
+            this.dgvCsvResult.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(164)))), ((int)(((byte)(120)))), ((int)(((byte)(100)))));
-            this.ClientSize = new System.Drawing.Size(1687, 1019);
+            this.ClientSize = new System.Drawing.Size(1949, 1019);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.btAddAllMaxPoints);
             this.Controls.Add(this.btClearSelectedRows);
@@ -438,9 +440,9 @@
             this.Controls.Add(this.dgvSelected);
             this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.dataGridView4);
+            this.Controls.Add(this.dgvCsvResult);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btSave);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
@@ -455,7 +457,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tBarThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelected)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCsvResult)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -481,13 +483,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dgvSelected;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Button btClearSelectedRows;
         private System.Windows.Forms.Button btAddAllMaxPoints;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridView dgvCsvResult;
     }
 }
 

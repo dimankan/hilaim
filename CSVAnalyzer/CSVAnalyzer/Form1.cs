@@ -19,20 +19,20 @@ namespace CSVAnalyzer
         public Form1()
         {
             InitializeComponent();
-           
+
             // Указываем путь к файлу настроек
             var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
             // Создаем менеджер для работы с JSON
             _jsonManager = new JsonFileManager<AppSettings>(filePath);
             // Считываем настройки из файла
             _settings = _jsonManager.Read();
-            
+
 
             tBarSmooth.Value = Convert.ToInt32(_settings.SmoothSize);
             tbSmooth.Text = _settings.SmoothSize;
 
             tbThreshold.Text = _settings.Threshold;
-            tBarThreshold.Value = Convert.ToInt32(Convert.ToDouble(_settings.Threshold.Replace(".",",")) * 1000);
+            tBarThreshold.Value = Convert.ToInt32(Convert.ToDouble(_settings.Threshold.Replace(".", ",")) * 1000);
 
             numericUpDown1.Value = _settings.ChartInterval;
         }
@@ -197,6 +197,7 @@ namespace CSVAnalyzer
                 lineAnnotation.Height = 121D;
                 lineAnnotation.LineColor = color;
                 lineAnnotation.X = xAxisValue; lineAnnotation.Y = 0;
+                lineAnnotation.LineWidth = 3;
 
                 // Добавляем аннотацию на график
                 chart.Annotations.Add(lineAnnotation);
@@ -306,8 +307,58 @@ namespace CSVAnalyzer
 
         private void btTest_Click(object sender, EventArgs e)
         {
-            dataGridView2.ClearSelection();
-            dataGridView3.ClearSelection();
+            //dataGridView2.ClearSelection();
+            //dataGridView3.ClearSelection();
+        }
+
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            // Проверяем, что была выбрана хотя бы одна строка
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                // Получаем значение из столбца "Wavelength" первой выделенной строки
+                object heyValue = dataGridView2.SelectedRows[0].Cells["Wavelength"].Value;
+
+                try
+                {
+                    // Проверяем, что значение является числовым
+                    if (double.TryParse(heyValue?.ToString(), out double wavelength))
+                    {
+                        // Добавляем вертикальные линии на графики
+                        AddVerticalLine(chart1, new List<double> { wavelength }, Color.Red);
+                        AddVerticalLine(chart2, new List<double> { wavelength }, Color.Red);
+                    }
+                }
+                catch (Exception)
+                {
+                    // Игнорируем ошибки
+                }
+            }
+        }
+
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            // Проверяем, что была выбрана хотя бы одна строка
+            if (dataGridView3.SelectedCells.Count > 0)
+            {
+                // Получаем значение из столбца "Wavelength" первой выделенной строки
+                object heyValue = dataGridView3.SelectedCells[0].Value;
+
+                try
+                {
+                    // Проверяем, что значение является числовым
+                    if (double.TryParse(heyValue?.ToString(), out double wavelength))
+                    {
+                        // Добавляем вертикальные линии на графики
+                        AddVerticalLine(chart1, new List<double> { wavelength }, Color.Blue);
+                        AddVerticalLine(chart2, new List<double> { wavelength }, Color.Blue);
+                    }
+                }
+                catch (Exception)
+                {
+                    // Игнорируем ошибки
+                }
+            }
         }
     }
 }

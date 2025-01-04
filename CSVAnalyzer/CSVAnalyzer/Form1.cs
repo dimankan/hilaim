@@ -100,6 +100,7 @@ namespace CSVAnalyzer
 
                     // Привязываем данные ко второму DataGridView
                     dataGridView2.DataSource = measurements;
+                    dataGridView2.ClearSelection();
                 }
 
                 DisplayChart1();
@@ -264,6 +265,7 @@ namespace CSVAnalyzer
             var maxPointsRound = maxPoints.Select(x => new { Wavelength = Math.Round(x.Wavelength) }).ToList();
 
             dataGridView3.DataSource = maxPointsRound;
+            dataGridView3.ClearSelection();
 
             AddVerticalLine(chart1, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Green);
             AddVerticalLine(chart2, maxPointsRound.Select(x => x.Wavelength).ToList(), Color.Green);
@@ -300,6 +302,12 @@ namespace CSVAnalyzer
 
             _settings.ChartInterval = Convert.ToInt32(numericUpDown1.Value);
             _jsonManager.Write(_settings);
+        }
+
+        private void btTest_Click(object sender, EventArgs e)
+        {
+            dataGridView2.ClearSelection();
+            dataGridView3.ClearSelection();
         }
     }
 }

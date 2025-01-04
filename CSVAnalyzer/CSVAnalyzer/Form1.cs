@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -83,6 +84,8 @@ namespace CSVAnalyzer
 
         private void button2_Click(object sender, EventArgs e)
         {
+
+
             List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(PathFile);
 
             dataGridView1.DataSource = dataCsv;
@@ -368,17 +371,17 @@ namespace CSVAnalyzer
             }
         }
 
-        List<string> selectedMaxPoints = new List<string>();
+        List<string> _selectedMaxPoints = new List<string>();
         private void AddMaxPoints(string maxPoints)
         {
             var maxPointsRound = Math.Round(Convert.ToDouble(maxPoints.Replace(".", ","))).ToString();
 
-            if (selectedMaxPoints.Contains(maxPointsRound))
+            if (_selectedMaxPoints.Contains(maxPointsRound))
                 return;
 
-            selectedMaxPoints.Add(maxPointsRound);
+            _selectedMaxPoints.Add(maxPointsRound);
 
-            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = x }).Distinct().ToList();
+            dgvSelected.DataSource = _selectedMaxPoints.Select(x => new { Wavelength = x }).Distinct().ToList();
         }
 
         private void btAddAllMaxPoints_Click(object sender, EventArgs e)
@@ -452,9 +455,9 @@ namespace CSVAnalyzer
 
         private void ClearSelectionRows()
         {
-            selectedMaxPoints.Clear();
+            _selectedMaxPoints.Clear();
 
-            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".", ","))) }).Distinct().ToList();
+            dgvSelected.DataSource = _selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".", ","))) }).Distinct().ToList();
 
 
             AddVerticalLine(chart1, null, Color.YellowGreen);
@@ -466,15 +469,15 @@ namespace CSVAnalyzer
 
         private void ClearSingleRows(string maxPoints)
         {
-            selectedMaxPoints.Remove(maxPoints);
+            _selectedMaxPoints.Remove(maxPoints);
 
-            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".", ","))) }).Distinct().ToList();
+            dgvSelected.DataSource = _selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".", ","))) }).Distinct().ToList();
         }
 
         private void dgvSelected_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            AddVerticalLine(chart1, selectedMaxPoints.Select(x => Convert.ToDouble(x)).ToList(), Color.YellowGreen);
-            AddVerticalLine(chart2, selectedMaxPoints.Select(x => Convert.ToDouble(x)).ToList(), Color.YellowGreen);
+            AddVerticalLine(chart1, _selectedMaxPoints.Select(x => Convert.ToDouble(x)).ToList(), Color.YellowGreen);
+            AddVerticalLine(chart2, _selectedMaxPoints.Select(x => Convert.ToDouble(x)).ToList(), Color.YellowGreen);
         }
 
         private void dgvSelected_SelectionChanged(object sender, EventArgs e)
@@ -514,7 +517,63 @@ namespace CSVAnalyzer
             }
         }
 
-        private void btSave_Click(object sender, EventArgs e)
+        private async void btSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Запускаем SaveDataForMl и SaveData параллельно
+                var task1 = Task.Run(() => SaveDataForMl(SelectedSubstanceData, _selectedMaxPoints));
+                var task2 = SaveData();
+
+                // Ждем завершения обеих задач
+                await Task.WhenAll(task1, task2);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private readonly object _saveLock = new object();
+
+        private async void SaveDataForMl(SubstanceData substanceData, List<string> selectedMaxPoints) 
+        {
+            lock (_saveLock)
+            {
+                try
+                {
+                    if (selectedMaxPoints.Count == 0 || selectedMaxPoints.Count == 0) return;
+
+                    var csvWriterForMl = new CsvWriterForMl("data_for_ml.csv");
+
+                    var time = DateTime.Now;
+                    foreach ((double Wavelength, double Abs) item in substanceData.Measurements)
+                    {
+                        bool isMaxWavelength = false;
+
+                        string roundWave = Math.Round(item.Wavelength).ToString();
+
+                        if (selectedMaxPoints.Contains(roundWave))
+                            isMaxWavelength = true;
+
+                        var data = new OutputModelForMl()
+                        {
+                            TimeStamp = time,
+                            ObjectName = SelectedSubstanceData.Name,
+                            Abs = item.Abs,
+                            Wavelength = item.Wavelength,
+                            IsMaxWavelength = isMaxWavelength,
+                        };
+
+                        csvWriterForMl.SaveModel(data);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        private async Task SaveData()
         {
             if (dataGridView1.Rows.Count == 0)
             {
@@ -524,14 +583,14 @@ namespace CSVAnalyzer
             var objectName = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
 
 
-            if(dgvSelected.Rows.Count == 0)
+            if (dgvSelected.Rows.Count == 0)
             {
                 MessageBox.Show("Не выбраны точки максимумов");
                 return;
             }
 
             var time = DateTime.Now;
-            foreach (var maxPoint in selectedMaxPoints)
+            foreach (var maxPoint in _selectedMaxPoints)
             {
                 // Сохранение новой модели
                 var model = new OutputModel

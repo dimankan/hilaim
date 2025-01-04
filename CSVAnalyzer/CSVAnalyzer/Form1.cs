@@ -84,7 +84,16 @@ namespace CSVAnalyzer
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            // Выбор файла из проводника
+            var dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                PathFile = dialog.FileName;
+                textBox1.Text = PathFile;
+                //_selectedFilePath = dialog.FileName;
+                //// Обновляем интерфейс, чтобы показать выбранный файл
+                //tbSelectedFile.Text = _selectedFilePath;
+            }
 
             List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(PathFile);
 

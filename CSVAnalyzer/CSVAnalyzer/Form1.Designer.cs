@@ -103,7 +103,7 @@
             series3.Legend = "Legend1";
             series3.Name = "Series1";
             this.chart1.Series.Add(series3);
-            this.chart1.Size = new System.Drawing.Size(1943, 299);
+            this.chart1.Size = new System.Drawing.Size(1865, 299);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
             // 
@@ -188,7 +188,7 @@
             series4.Legend = "Legend1";
             series4.Name = "Series1";
             this.chart2.Series.Add(series4);
-            this.chart2.Size = new System.Drawing.Size(1943, 299);
+            this.chart2.Size = new System.Drawing.Size(1865, 299);
             this.chart2.TabIndex = 2;
             this.chart2.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
             // 
@@ -206,7 +206,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1949, 610);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1871, 610);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // tBarSmooth
@@ -400,6 +400,7 @@
             // dgvCsvResult
             // 
             this.dgvCsvResult.AllowUserToResizeRows = false;
+            this.dgvCsvResult.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCsvResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCsvResult.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
             this.dgvCsvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -418,6 +419,7 @@
             // 
             // btShowFile
             // 
+            this.btShowFile.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btShowFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(139)))), ((int)(((byte)(79)))));
             this.btShowFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btShowFile.FlatAppearance.BorderSize = 0;
@@ -434,7 +436,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(164)))), ((int)(((byte)(120)))), ((int)(((byte)(100)))));
-            this.ClientSize = new System.Drawing.Size(1949, 1019);
+            this.ClientSize = new System.Drawing.Size(1871, 1019);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.btAddAllMaxPoints);
             this.Controls.Add(this.btClearSelectedRows);

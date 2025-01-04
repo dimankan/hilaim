@@ -61,6 +61,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.dgvCsvResult = new System.Windows.Forms.DataGridView();
+            this.btShowFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -300,7 +301,7 @@
             this.dgvSelected.AllowUserToResizeRows = false;
             this.dgvSelected.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
             this.dgvSelected.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSelected.Location = new System.Drawing.Point(998, 93);
+            this.dgvSelected.Location = new System.Drawing.Point(1017, 93);
             this.dgvSelected.Name = "dgvSelected";
             this.dgvSelected.RowHeadersVisible = false;
             this.dgvSelected.RowHeadersWidth = 51;
@@ -314,7 +315,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(995, 74);
+            this.label6.Location = new System.Drawing.Point(1014, 74);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(128, 16);
             this.label6.TabIndex = 9;
@@ -325,7 +326,7 @@
             this.btSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(160)))), ((int)(((byte)(107)))));
             this.btSave.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btSave.FlatAppearance.BorderSize = 0;
-            this.btSave.Location = new System.Drawing.Point(1144, 93);
+            this.btSave.Location = new System.Drawing.Point(1163, 93);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(96, 51);
             this.btSave.TabIndex = 3;
@@ -338,7 +339,7 @@
             this.btClearSelectedRows.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(156)))), ((int)(((byte)(151)))));
             this.btClearSelectedRows.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btClearSelectedRows.FlatAppearance.BorderSize = 0;
-            this.btClearSelectedRows.Location = new System.Drawing.Point(1144, 277);
+            this.btClearSelectedRows.Location = new System.Drawing.Point(1163, 277);
             this.btClearSelectedRows.Name = "btClearSelectedRows";
             this.btClearSelectedRows.Size = new System.Drawing.Size(96, 51);
             this.btClearSelectedRows.TabIndex = 10;
@@ -353,9 +354,9 @@
             this.btAddAllMaxPoints.FlatAppearance.BorderSize = 0;
             this.btAddAllMaxPoints.Location = new System.Drawing.Point(913, 159);
             this.btAddAllMaxPoints.Name = "btAddAllMaxPoints";
-            this.btAddAllMaxPoints.Size = new System.Drawing.Size(79, 94);
+            this.btAddAllMaxPoints.Size = new System.Drawing.Size(98, 94);
             this.btAddAllMaxPoints.TabIndex = 10;
-            this.btAddAllMaxPoints.Text = "Выбрать все";
+            this.btAddAllMaxPoints.Text = "Выбрать все\r\nMax points\r\n";
             this.btAddAllMaxPoints.UseVisualStyleBackColor = false;
             this.btAddAllMaxPoints.Click += new System.EventHandler(this.btAddAllMaxPoints_Click);
             // 
@@ -403,17 +404,30 @@
             this.dgvCsvResult.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
             this.dgvCsvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCsvResult.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
-            this.dgvCsvResult.Location = new System.Drawing.Point(1246, 93);
+            this.dgvCsvResult.Location = new System.Drawing.Point(1265, 93);
             this.dgvCsvResult.Name = "dgvCsvResult";
             this.dgvCsvResult.RowHeadersVisible = false;
             this.dgvCsvResult.RowHeadersWidth = 51;
             this.dgvCsvResult.RowTemplate.Height = 24;
             this.dgvCsvResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvCsvResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvCsvResult.Size = new System.Drawing.Size(691, 235);
+            this.dgvCsvResult.Size = new System.Drawing.Size(599, 235);
             this.dgvCsvResult.TabIndex = 4;
             this.dgvCsvResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCsvResult_CellFormatting);
             this.dgvCsvResult.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
+            // btShowFile
+            // 
+            this.btShowFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(139)))), ((int)(((byte)(79)))));
+            this.btShowFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btShowFile.FlatAppearance.BorderSize = 0;
+            this.btShowFile.Location = new System.Drawing.Point(1704, 39);
+            this.btShowFile.Name = "btShowFile";
+            this.btShowFile.Size = new System.Drawing.Size(160, 51);
+            this.btShowFile.TabIndex = 3;
+            this.btShowFile.Text = "Показать файл в папке";
+            this.btShowFile.UseVisualStyleBackColor = false;
+            this.btShowFile.Click += new System.EventHandler(this.btShowFile_Click);
             // 
             // Form1
             // 
@@ -442,6 +456,7 @@
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dgvCsvResult);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btShowFile);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
@@ -490,6 +505,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.DataGridView dgvCsvResult;
+        private System.Windows.Forms.Button btShowFile;
     }
 }
 

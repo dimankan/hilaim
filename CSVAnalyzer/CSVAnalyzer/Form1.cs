@@ -561,5 +561,13 @@ namespace CSVAnalyzer
                 e.FormattingApplied = true;
             }
         }
+
+        private void btShowFile_Click(object sender, EventArgs e)
+        {
+            string filePath = @"data.csv";
+
+            // Открываем папку, содержащую файл
+            System.Diagnostics.Process.Start("explorer.exe", "/select," + filePath);
+        }
     }
 }

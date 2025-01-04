@@ -34,6 +34,7 @@ namespace CSVAnalyzer
             tbThreshold.Text = _settings.Threshold;
             tBarThreshold.Value = Convert.ToInt32(Convert.ToDouble(_settings.Threshold.Replace(".",",")) * 1000);
 
+            numericUpDown1.Value = _settings.ChartInterval;
         }
 
         public SubstanceData SelectedSubstanceData { get; set; }
@@ -161,11 +162,16 @@ namespace CSVAnalyzer
             chart.ChartAreas[0].AxisY.Title = "Absorption (AU)";
 
             // Настройка частоты отображения меток на осях
-            chart.ChartAreas[0].AxisX.Interval = 50; // Интервал между метками по оси X
+            chart.ChartAreas[0].AxisX.Interval = _settings.ChartInterval; // Интервал между метками по оси X
 
             // Дополнительные настройки оси X (например, начало и конец)
             chart.ChartAreas[0].AxisX.Minimum = xAxisMin ?? measurements.Min(m => m.Wavelength);
             chart.ChartAreas[0].AxisX.Maximum = xAxisMax ?? measurements.Max(m => m.Wavelength);
+        }
+
+        private void ChangeChartInterval(Chart chart, int interval)
+        {
+            chart.ChartAreas[0].AxisX.Interval = interval; // Интервал между метками по оси X
         }
 
         private void AddVerticalLine(Chart chart, List<double> xAxisValueCollection, Color color)
@@ -222,7 +228,6 @@ namespace CSVAnalyzer
 
         private void tbThreshold_TextChanged(object sender, EventArgs e)
         {
-            //var valuePoint = 
             //// Проверяем, является ли ввод числом
             if (!Double.TryParse(tbThreshold.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out Double value) || value < (double)0)
             {
@@ -278,5 +283,13 @@ namespace CSVAnalyzer
             return peaks;
         }
 
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            ChangeChartInterval(chart1, Convert.ToInt32(numericUpDown1.Value));
+            ChangeChartInterval(chart2, Convert.ToInt32(numericUpDown1.Value));
+
+            _settings.ChartInterval = Convert.ToInt32(numericUpDown1.Value);
+            _jsonManager.Write(_settings);
+        }
     }
 }

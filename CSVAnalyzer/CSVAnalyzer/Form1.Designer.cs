@@ -60,7 +60,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.btTest = new System.Windows.Forms.Button();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -71,6 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tBarThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelected)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -101,7 +102,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(1359, 299);
+            this.chart1.Size = new System.Drawing.Size(1681, 299);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
             // 
@@ -186,7 +187,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(1359, 299);
+            this.chart2.Size = new System.Drawing.Size(1681, 299);
             this.chart2.TabIndex = 2;
             this.chart2.Text = "СПЕКТР ПОГЛОЩЕНИЯ!1!11)";
             // 
@@ -204,7 +205,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1365, 610);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1687, 610);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // tBarSmooth
@@ -306,6 +307,9 @@
             this.dgvSelected.RowTemplate.Height = 24;
             this.dgvSelected.Size = new System.Drawing.Size(140, 235);
             this.dgvSelected.TabIndex = 5;
+            this.dgvSelected.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSelected_CellDoubleClick);
+            this.dgvSelected.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvSelected_RowsAdded);
+            this.dgvSelected.SelectionChanged += new System.EventHandler(this.dgvSelected_SelectionChanged);
             // 
             // label6
             // 
@@ -323,7 +327,7 @@
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.Location = new System.Drawing.Point(1144, 93);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(140, 51);
+            this.button1.Size = new System.Drawing.Size(96, 51);
             this.button1.TabIndex = 3;
             this.button1.Text = "Сохранить";
             this.button1.UseVisualStyleBackColor = false;
@@ -335,7 +339,7 @@
             this.btClearSelectedRows.FlatAppearance.BorderSize = 0;
             this.btClearSelectedRows.Location = new System.Drawing.Point(1144, 277);
             this.btClearSelectedRows.Name = "btClearSelectedRows";
-            this.btClearSelectedRows.Size = new System.Drawing.Size(140, 51);
+            this.btClearSelectedRows.Size = new System.Drawing.Size(96, 51);
             this.btClearSelectedRows.TabIndex = 10;
             this.btClearSelectedRows.Text = "Очистить";
             this.btClearSelectedRows.UseVisualStyleBackColor = false;
@@ -391,23 +395,30 @@
             this.numericUpDown1.TabIndex = 11;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // btTest
+            // dataGridView4
             // 
-            this.btTest.Location = new System.Drawing.Point(1208, 13);
-            this.btTest.Name = "btTest";
-            this.btTest.Size = new System.Drawing.Size(110, 47);
-            this.btTest.TabIndex = 12;
-            this.btTest.Text = "test";
-            this.btTest.UseVisualStyleBackColor = true;
-            this.btTest.Click += new System.EventHandler(this.btTest_Click);
+            this.dataGridView4.AllowUserToResizeRows = false;
+            this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView4.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(154)))), ((int)(((byte)(142)))));
+            this.dataGridView4.Location = new System.Drawing.Point(1246, 93);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.RowHeadersVisible = false;
+            this.dataGridView4.RowHeadersWidth = 51;
+            this.dataGridView4.RowTemplate.Height = 24;
+            this.dataGridView4.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView4.Size = new System.Drawing.Size(427, 235);
+            this.dataGridView4.TabIndex = 4;
+            this.dataGridView4.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(164)))), ((int)(((byte)(120)))), ((int)(((byte)(100)))));
-            this.ClientSize = new System.Drawing.Size(1365, 1019);
-            this.Controls.Add(this.btTest);
+            this.ClientSize = new System.Drawing.Size(1687, 1019);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.btAddAllMaxPoints);
             this.Controls.Add(this.btClearSelectedRows);
@@ -427,6 +438,7 @@
             this.Controls.Add(this.dgvSelected);
             this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.dataGridView4);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
@@ -443,6 +455,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tBarThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelected)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,7 +487,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Button btTest;
+        private System.Windows.Forms.DataGridView dataGridView4;
     }
 }
 

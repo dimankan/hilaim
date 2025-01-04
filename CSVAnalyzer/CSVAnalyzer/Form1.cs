@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -109,6 +110,8 @@ namespace CSVAnalyzer
                 // Обработка и отображение данных на графике
 
                 GetMaxPoints();
+
+                ClearSelectionRows();
             }
         }
 
@@ -189,6 +192,8 @@ namespace CSVAnalyzer
                 chart.Annotations.Remove(annotation);
             }
 
+            if (xAxisValueCollection == null)
+                return;
 
             foreach (var xAxisValue in xAxisValueCollection)
             {
@@ -305,12 +310,6 @@ namespace CSVAnalyzer
             _jsonManager.Write(_settings);
         }
 
-        private void btTest_Click(object sender, EventArgs e)
-        {
-            //dataGridView2.ClearSelection();
-            //dataGridView3.ClearSelection();
-        }
-
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
             // Проверяем, что была выбрана хотя бы одна строка
@@ -364,11 +363,16 @@ namespace CSVAnalyzer
         List<string> selectedMaxPoints = new List<string>();
         private void AddMaxPoints(string maxPoints)
         {
-            selectedMaxPoints.Add(maxPoints);
+            var maxPointsRound = Math.Round(Convert.ToDouble(maxPoints.Replace(".", ","))).ToString();
 
-            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".",","))) }).Distinct().ToList();
+            if (selectedMaxPoints.Contains(maxPointsRound))
+                return;
+
+            selectedMaxPoints.Add(maxPointsRound);
+
+            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = x}).Distinct().ToList();
         }
-        
+
         private void btAddAllMaxPoints_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in dataGridView3.Rows)
@@ -384,7 +388,7 @@ namespace CSVAnalyzer
             {
                 // Получаем значение ячейки
                 object cellValue = dataGridView3.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-              
+
                 AddMaxPoints(cellValue.ToString());
             }
         }
@@ -435,9 +439,71 @@ namespace CSVAnalyzer
 
         private void btClearSelectedRows_Click(object sender, EventArgs e)
         {
+            ClearSelectionRows();
+        }
+
+        private void ClearSelectionRows()
+        {
             selectedMaxPoints.Clear();
 
-            dgvSelected.DataSource = selectedMaxPoints;
+            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".", ","))) }).Distinct().ToList();
+
+
+            AddVerticalLine(chart1, null, Color.YellowGreen);
+            AddVerticalLine(chart2, null, Color.YellowGreen);
+
+            AddVerticalLine(chart1, null, Color.DarkGreen);
+            AddVerticalLine(chart2, null, Color.DarkGreen);
+        }
+
+        private void ClearSingleRows(string maxPoints)
+        {
+            selectedMaxPoints.Remove(maxPoints);
+
+            dgvSelected.DataSource = selectedMaxPoints.Select(x => new { Wavelength = Math.Round(Convert.ToDouble(x.Replace(".", ","))) }).Distinct().ToList();
+        }
+
+        private void dgvSelected_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            AddVerticalLine(chart1, selectedMaxPoints.Select(x=>Convert.ToDouble(x)).ToList(), Color.YellowGreen);
+            AddVerticalLine(chart2, selectedMaxPoints.Select(x=>Convert.ToDouble(x)).ToList(), Color.YellowGreen);
+        }
+
+        private void dgvSelected_SelectionChanged(object sender, EventArgs e)
+        {
+            // Проверяем, что была выбрана хотя бы одна строка
+            if (dgvSelected.SelectedCells.Count > 0)
+            {
+                // Получаем значение из столбца "Wavelength" первой выделенной строки
+                object heyValue = dgvSelected.SelectedCells[0].Value;
+
+                try
+                {
+                    // Проверяем, что значение является числовым
+                    if (double.TryParse(heyValue?.ToString(), out double wavelength))
+                    {
+                        // Добавляем вертикальные линии на графики
+                        AddVerticalLine(chart1, new List<double> { wavelength }, Color.DarkGreen);
+                        AddVerticalLine(chart2, new List<double> { wavelength }, Color.DarkGreen);
+                    }
+                }
+                catch (Exception)
+                {
+                    // Игнорируем ошибки
+                }
+            }
+        }
+
+        private void dgvSelected_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Проверяем, что была выбрана ячейка, а не заголовок или пустое пространство
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Получаем значение ячейки
+                object cellValue = dgvSelected.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+
+                ClearSingleRows(cellValue.ToString());
+            }
         }
     }
 }

@@ -167,6 +167,7 @@ namespace CSVAnalyzer
             // Дополнительные настройки оси X (например, начало и конец)
             chart.ChartAreas[0].AxisX.Minimum = xAxisMin ?? measurements.Min(m => m.Wavelength);
             chart.ChartAreas[0].AxisX.Maximum = xAxisMax ?? measurements.Max(m => m.Wavelength);
+            chart.ChartAreas[0].AxisX.LabelStyle.Format = "0";
         }
 
         private void ChangeChartInterval(Chart chart, int interval)
@@ -176,8 +177,17 @@ namespace CSVAnalyzer
 
         private void AddVerticalLine(Chart chart, List<double> xAxisValueCollection, Color color)
         {
+            // Находим все существующие аннотации с указанным цветом
+            var annotationsToRemove = chart.Annotations.OfType<VerticalLineAnnotation>()
+                                       .Where(a => a.LineColor == color)
+                                       .ToList();
 
-            chart.Annotations.Clear();
+            // Удаляем найденные аннотации
+            foreach (var annotation in annotationsToRemove)
+            {
+                chart.Annotations.Remove(annotation);
+            }
+
 
             foreach (var xAxisValue in xAxisValueCollection)
             {

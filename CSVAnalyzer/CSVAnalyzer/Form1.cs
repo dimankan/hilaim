@@ -90,15 +90,19 @@ namespace CSVAnalyzer
             {
                 PathFile = dialog.FileName;
                 textBox1.Text = PathFile;
-                //_selectedFilePath = dialog.FileName;
-                //// Обновляем интерфейс, чтобы показать выбранный файл
-                //tbSelectedFile.Text = _selectedFilePath;
             }
+            try
+            {
 
-            List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(PathFile);
+                List<SubstanceData> dataCsv = CsvProcessor.LoadFromFile(PathFile);
 
-            dataGridView1.DataSource = dataCsv;
+                dataGridView1.DataSource = dataCsv;
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не смог прочитать файл CSV. Кидай файл t.me/dv0888.{Environment.NewLine}{ex.Message}", "ТРАГЕДИЯ!");
+            }
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
